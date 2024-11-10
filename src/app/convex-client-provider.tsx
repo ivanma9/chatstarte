@@ -11,7 +11,7 @@ export function ConvexClientProvider({
 }:{
     children: React.ReactNode;
 }) {
-    return <ConvexProviderWithClerk client={client} useAuth={useAuth}>{children}</ConvexProviderWithClerk>
+    return (<ConvexProviderWithClerk client={client} useAuth={useAuth}>{children}</ConvexProviderWithClerk>)
 }
 
 
