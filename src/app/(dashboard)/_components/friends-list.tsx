@@ -12,15 +12,6 @@ import React from "react";
 import { api } from "../../../../convex/_generated/api";
 import { cn } from "@/lib/utils";
 
-const useTestUsers = () => {
-	const user = useQuery(api.functions.user.get);
-	if (!user) {
-		return [];
-	}
-
-	return [user, user, user, user, user];
-};
-
 export function PendingFriendsList() {
 	const friends = useQuery(api.functions.friends.listPending);
 	const updateStatus = useMutation(api.functions.friends.updateStatus);
