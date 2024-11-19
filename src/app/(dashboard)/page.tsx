@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import {
 	AcceptedFriendsList,
