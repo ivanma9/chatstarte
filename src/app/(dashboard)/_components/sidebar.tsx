@@ -37,9 +37,6 @@ export function DashboardSidebar() {
 	const user = useQuery(api.functions.user.get);
 	const dms = useTestDMs();
 	const pathName = usePathname();
-	console.log("dms");
-
-	dms.map((dm) => console.log(dm));
 
 	if (!user) {
 		return null;
