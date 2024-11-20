@@ -23,7 +23,7 @@ export default function MessagePage({
 		return null;
 	}
 	return (
-		<div className="flex flex-1 flex-col divide-y max-h-screen">
+		<div className="flex flex-1">
 			<header className="flex items-center gap-2 p-4">
 				<Avatar className="size-8 border">
 					<AvatarImage src={user.image} />
