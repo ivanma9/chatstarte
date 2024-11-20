@@ -22,7 +22,6 @@ export default function MessagePage({
 	if (!user) {
 		return null;
 	}
-	// return id;
 	return (
 		<div className="flex flex-1 flex-col divide-y max-h-screen">
 			<header className="flex items-center gap-2 p-4">
