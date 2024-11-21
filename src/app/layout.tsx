@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body>
+			<body className="flex max-h">
 				<ClerkProvider dynamic>
 					<ConvexClientProvider>{children}</ConvexClientProvider>
 				</ClerkProvider>
