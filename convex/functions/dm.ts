@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { authenticatedQuery } from "./helpers";
+import { authenticatedMutation, authenticatedQuery } from "./helpers";
 import { QueryCtx } from "../_generated/server";
 import { Doc, Id } from "../_generated/dataModel";
 
@@ -34,6 +34,50 @@ export const get = authenticatedQuery({
 	},
 });
 
+export const create = authenticatedMutation({
+	args: {
+		username: v.string(),
+	},
+	handler: async (ctx, { username }) => {
+		const user = await ctx.db
+			.query("users")
+			.withIndex("by_username", (q) => q.eq("username", username))
+			.first();
+		if (!user) {
+			throw new Error("User does not exist");
+		}
+
+		const directMessageForCurrentUser = await ctx.db
+			.query("directMessageMembers")
+			.withIndex("by_user", (q) => q.eq("user", ctx.user._id))
+			.collect();
+		const directMessageForOtherUser = await ctx.db
+			.query("directMessageMembers")
+			.withIndex("by_user", (q) => q.eq("user", user._id))
+			.collect();
+		const directMessage = directMessageForCurrentUser.find((dm) =>
+			directMessageForOtherUser.find(
+				(dm2) => dm2.directMessage === dm.directMessage
+			)
+		);
+		if (directMessage) {
+			return directMessage;
+		}
+		const newDirectMessage = await ctx.db.insert("directMessages", {});
+		await Promise.all([
+			ctx.db.insert("directMessageMembers", {
+				directMessage: newDirectMessage,
+				user: ctx.user._id,
+			}),
+			ctx.db.insert("directMessageMembers", {
+				directMessage: newDirectMessage,
+				user: user._id,
+			}),
+		]);
+		return newDirectMessage;
+	},
+});
+
 const getDirectMessage = async (
 	ctx: QueryCtx & { user: Doc<"users"> },
 	id: Id<"directMessages">
@@ -50,13 +94,13 @@ const getDirectMessage = async (
 	if (!otherMember) {
 		throw new Error("Direct message has no other members");
 	}
-	const otherUser = await ctx.db.get(otherMember.user);
-	if (!otherUser) {
+	const user = await ctx.db.get(otherMember.user);
+	if (!user) {
 		throw new Error("Other member does not exist");
 	}
 
 	return {
 		...dm,
-		otherUser,
+		user,
 	};
 };

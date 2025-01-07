@@ -29,7 +29,8 @@ export default defineSchema({
 		.index("by_direct_message_user", ["directMessage", "user"])
 		.index("by_user", ["user"]),
 	messages: defineTable({
-		sender: v.string(),
+		sender: v.id("users"),
 		content: v.string(),
-	}),
+		directMessage: v.id("directMessages"),
+	}).index("by_direct_message", ["directMessage"]),
 });

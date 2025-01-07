@@ -25,21 +25,10 @@ import { api } from "../../../../convex/_generated/api";
 import { NewDirectMessage } from "./new-direct-message";
 import { usePathname } from "next/navigation";
 
-const useTestDMs = () => {
-	const user = useQuery(api.functions.user.get);
-	if (!user) {
-		return [];
-	}
-	return [user, user, user];
-};
-
 export function DashboardSidebar() {
 	const user = useQuery(api.functions.user.get);
-	const dms = useTestDMs();
+	const dms = useQuery(api.functions.dm.list);
 	const pathName = usePathname();
-	console.log("dms");
-
-	dms.map((dm) => console.log(dm));
 
 	if (!user) {
 		return null;
@@ -66,7 +55,7 @@ export function DashboardSidebar() {
 						<NewDirectMessage />
 						<SidebarGroupContent>
 							<SidebarMenu>
-								{dms.map((dm) => (
+								{dms?.map((dm) => (
 									<SidebarMenuItem key={dm._id}>
 										<SidebarMenuButton
 											asChild
@@ -74,10 +63,10 @@ export function DashboardSidebar() {
 										>
 											<Link href={`/dms/${dm._id}`}>
 												<Avatar className="size-6">
-													<AvatarImage src={dm.image} />
-													<AvatarFallback>{dm.username[0]}</AvatarFallback>
+													<AvatarImage src={dm.user.image} />
+													<AvatarFallback>{dm.user.username[0]}</AvatarFallback>
 												</Avatar>
-												<p className="font-medium">{dm.username}</p>
+												<p className="font-medium">{dm.user.username}</p>
 											</Link>
 										</SidebarMenuButton>
 									</SidebarMenuItem>
