@@ -10,7 +10,7 @@ import { useMutation, useQuery } from "convex/react";
 
 import { CheckIcon, MessageCircleIcon, XIcon } from "lucide-react";
 import React from "react";
-import { api } from "../../../../convex/_generated/api";
+import { api } from "../../../../../convex/_generated/api";
 import { cn } from "@/lib/utils";
 
 export function PendingFriendsList() {
