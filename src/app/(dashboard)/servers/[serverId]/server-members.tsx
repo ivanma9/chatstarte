@@ -2,7 +2,7 @@ import { useQuery } from "convex/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { api } from "../../../../../convex/_generated/api";
 import { Id } from "../../../../../convex/_generated/dataModel";
-
+import CreateInvite from "./create-invite";
 export default function ServerMembers({ id }: { id: Id<"servers"> }) {
 	const members = useQuery(api.functions.server.members, { id });
 	return (
@@ -16,6 +16,7 @@ export default function ServerMembers({ id }: { id: Id<"servers"> }) {
 					<p>{member.username}</p>
 				</div>
 			))}
+			<CreateInvite serverId={id} />
 		</div>
 	);
 }

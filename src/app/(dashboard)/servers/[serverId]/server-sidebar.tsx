@@ -10,6 +10,7 @@ import {
 	SidebarMenuItem,
 	SidebarMenuButton,
 	SidebarMenuAction,
+	SidebarFooter,
 } from "@/components/ui/sidebar";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
@@ -18,6 +19,7 @@ import Link from "next/link";
 import CreateChannel from "./create-channel";
 import { Trash2Icon } from "lucide-react";
 import { toast } from "sonner";
+import Voice from "./voice";
 export default function ServerSidebar({ id }: { id: Id<"servers"> }) {
 	const server = useQuery(api.functions.server.get, { id });
 	const channels = useQuery(api.functions.channel.list, { id });
@@ -74,6 +76,17 @@ export default function ServerSidebar({ id }: { id: Id<"servers"> }) {
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
+			<SidebarFooter>
+				<SidebarGroup>
+					<SidebarGroupContent>
+						<SidebarMenu>
+							<SidebarMenuItem>
+								<Voice serverId={id} />
+							</SidebarMenuItem>
+						</SidebarMenu>
+					</SidebarGroupContent>
+				</SidebarGroup>
+			</SidebarFooter>
 		</Sidebar>
 	);
 }
