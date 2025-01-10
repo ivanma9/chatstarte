@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import {
-	assertMember,
+	assertChannelMember,
 	authenticatedMutation,
 	authenticatedQuery,
 } from "./helpers";
@@ -11,7 +11,7 @@ export const list = authenticatedQuery({
 		dmOrChannelId: v.union(v.id("directMessages"), v.id("channels")),
 	},
 	handler: async (ctx, { dmOrChannelId }) => {
-		await assertMember(ctx, dmOrChannelId);
+		await assertChannelMember(ctx, dmOrChannelId);
 		const messages = await ctx.db
 			.query("messages")
 			.withIndex("by_dmOrChannelId", (q) =>
@@ -41,7 +41,7 @@ export const create = authenticatedMutation({
 		dmOrChannelId: v.union(v.id("directMessages"), v.id("channels")),
 	},
 	handler: async (ctx, { content, attachment, dmOrChannelId }) => {
-		await assertMember(ctx, dmOrChannelId);
+		await assertChannelMember(ctx, dmOrChannelId);
 		await ctx.db.insert("messages", {
 			content,
 			attachment,

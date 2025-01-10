@@ -31,14 +31,16 @@ export default defineSchema({
 
 	servers: defineTable({
 		name: v.string(),
-		owner: v.id("users"),
+		ownerId: v.id("users"),
 		iconId: v.optional(v.id("_storage")),
 		defaultChannelId: v.optional(v.id("channels")),
 	}),
 	channels: defineTable({
 		name: v.string(),
 		serverId: v.id("servers"),
-	}).index("by_server", ["serverId"]),
+	})
+		.index("by_serverId", ["serverId"])
+		.index("by_serverId_name", ["serverId", "name"]),
 	serverMembers: defineTable({
 		serverId: v.id("servers"),
 		userId: v.id("users"),
