@@ -1,29 +1,10 @@
 "use client";
-import { useMutation, useQuery } from "convex/react";
-import { use, useRef, useState } from "react";
-import { api } from "../../../../../convex/_generated/api";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
-import {
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-	Loader2Icon,
-	MoreVerticalIcon,
-	PlusIcon,
-	SendIcon,
-	TrashIcon,
-} from "lucide-react";
-import { FunctionReturnType } from "convex/server";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Id } from "../../../../../convex/_generated/dataModel";
-import { toast } from "sonner";
-import Image from "next/image";
 import { Messages } from "@/components/messages";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useQuery } from "convex/react";
+import { use } from "react";
+import { api } from "../../../../../convex/_generated/api";
+import { Id } from "../../../../../convex/_generated/dataModel";
 
 export default function MessagePage({
 	params,
