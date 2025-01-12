@@ -28,7 +28,7 @@ export function MainSidebar() {
 								<SidebarMenuButton
 									tooltip="Direct Messages"
 									asChild
-									isActive={pathName.startsWith("/dms")}
+									isActive={pathName ? pathName.startsWith("/dms") : false}
 								>
 									<Link href="/dms">
 										<UserIcon className="w-4 h-4" />
