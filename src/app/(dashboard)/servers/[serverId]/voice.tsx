@@ -1,3 +1,5 @@
+"use client";
+
 import {
 	Dialog,
 	DialogContent,
@@ -29,7 +31,7 @@ export default function Voice({ serverId }: { serverId: Id<"servers"> }) {
 				<DialogTitle className="sr-only">Voice</DialogTitle>
 				<LiveKitRoom
 					serverUrl="wss://chatstarter-4abfxxpn.livekit.cloud"
-					token={token}
+					token={token ?? undefined}
 					onDisconnected={() => setOpen(false)}
 				>
 					<VideoConference />
